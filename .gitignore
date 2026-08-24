@@ -1,0 +1,15 @@
+# 敏感配置文件 - 不推送到GitHub（包含个人信息）
+# 这些文件保留在本地供定时任务读取，不公开到网站
+**/profile.json
+**/blacklist.json
+**/rules.json
+**/push_history.json
+
+# 但保留模板文件
+!users/_template/profile.json
+!shared/rules_template.json
+
+# 临时文件
+*.tmp
+*.bak
+.DS_Store

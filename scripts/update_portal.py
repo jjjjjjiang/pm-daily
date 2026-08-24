@@ -35,7 +35,7 @@ def scan_users():
             reports = sorted(glob.glob(os.path.join(reports_dir, "pm-jobs-*.html")), reverse=True)
 
         latest_report = os.path.basename(reports[0]) if reports else None
-        report_path = f"/users/{user_dir}/reports/{latest_report}" if latest_report else "#"
+        report_path = f"users/{user_dir}/reports/{latest_report}" if latest_report else "#"
 
         # 统计最新报告中的岗位数（简单解析HTML）
         job_count = 0
@@ -154,7 +154,7 @@ def generate_index(users):
 
 <div class="nav">
   <div class="logo">PM岗位日报平台 <span>每日自动搜索 · 智能匹配 · 一键投递</span></div>
-  <div class="admin">管理员：江骏昱</div>
+  <div class="admin">管理员：平台管理员</div>
 </div>
 
 <div class="container">
@@ -182,7 +182,7 @@ def generate_index(users):
   </div>
 
   <div class="footer">
-    <p>PM岗位日报平台 · 最后更新：{today} · 管理员：江骏昱</p>
+    <p>PM岗位日报平台 · 最后更新：{today}</p>
   </div>
 </div>
 
