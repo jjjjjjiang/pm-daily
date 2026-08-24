@@ -1,0 +1,76 @@
+{
+  "$schema": "默认规则模板 - 新用户初始化时复制此文件，然后根据用户需求定制",
+  "version": "1.0",
+
+  "matching_rules": {
+    "city_rule": "城市必须匹配用户画像中的目标城市（或该城市base可出差的岗位）",
+    "direction_priority": "按用户意向方向优先级匹配，分高度匹配和中等匹配两组",
+    "salary_rule": "薪资优先匹配用户期望薪资±30%区间",
+    "industry_rule": "行业不限，但优先用户preferred_industries",
+    "dedup_rule": "当日报告内岗位去重，同一职位在多个平台出现时保留信息最全的一条"
+  },
+
+  "job_type_filter_rules": {
+    "description": "岗位类型筛选 - 排除非目标类型的岗位",
+    "must_read_jd": "对每个岗位必须通过WebFetch获取完整JD进行类型判断，不能仅凭职位名称判断",
+    "exclude_types": [
+      {
+        "type": "商品企划/产线产品经理",
+        "keywords": ["商品企划", "买手", "流行趋势", "面料", "款式", "设计师", "广告学", "新闻学", "审美能力"],
+        "note": "JD中'商品中心'可能指企划部门（排除）而非IT系统（保留），需通过JD上下文判断"
+      },
+      {
+        "type": "市场/渠道产品经理",
+        "keywords": ["品牌定位", "市场调研", "渠道开发", "营销策略", "品牌战略"]
+      },
+      {
+        "type": "物流商务/运价采购/渠道开发",
+        "keywords": ["运价采购", "运价管理", "运价谈判", "物流渠道开发", "供应商资源", "报价策略", "协助销售", "投标", "市场商务"],
+        "note": "即使职位名称含'产品经理'，如果JD实际职责是商务/采购/渠道开发而非系统产品设计，必须排除"
+      },
+      {
+        "type": "纯C端产品经理",
+        "keywords": ["用户增长", "留存", "DAU", "MAU", "裂变"],
+        "note": "同时含B端和C端的可保留但标注中等匹配"
+      }
+    ]
+  },
+
+  "exclusion_transparency_rules": {
+    "description": "排除透明化 - 被排除的岗位不得静默删除",
+    "rule": "所有被排除的岗位必须在报告底部'已排除岗位'区域列出，包含职位名称、公司、排除原因、详情说明、职位链接",
+    "principle": "宁可多列出让用户自行判断，也不能静默删除导致用户永远不知道错过了什么"
+  },
+
+  "cross_day_dedup_rules": {
+    "description": "跨日去重 - 避免跨天重复推送",
+    "retention_days": 30,
+    "rule": "读取用户目录下的push_history.json，已推送过的岗位不列入正式列表，放入'近期已推送'区域",
+    "dedup_key": "优先用职位链接URL去重，URL不可用时用'公司名+职位名'组合去重"
+  },
+
+  "link_format_rules": {
+    "boss": "https://www.zhipin.com/job_detail/{id}.html（禁止m.zhipin.com、zhaopin/格式、以~~结尾）",
+    "51job": "https://jobs.51job.com/shanghai/{id}.html（禁止msearch.51job.com、search.51job.com）",
+    "yupao": "优先https://www.yupao.com/zhaogong/{id}.html，桌面端打不开回退https://m.yupao.com/zhaogong/{id}.html"
+  },
+
+  "link_verification_rules": {
+    "rule": "每个职位链接必须逐一WebFetch校验可访问性，打不开的必须替换",
+    "boss_note": "BOSS直聘返回'访问受限，请登录后使用'属正常限制，链接格式正确即可保留"
+  },
+
+  "job_status_verification_rules": {
+    "rule": "已关闭的职位从正式列表移除，放入'已排除岗位'区域公示，同步更新统计数据"
+  },
+
+  "layout_rules": {
+    "format": "紧凑表格样式，每个岗位一行",
+    "columns": ["序号", "职位/公司", "薪资", "地点·经验", "来源", "链接操作"],
+    "link_buttons": "'打开 ↗'（a标签target=_blank）+'复制'按钮（JavaScript clipboard一键复制）",
+    "collapsible": "匹配理由和话术用details/summary折叠展开",
+    "color_coding": "高度匹配行绿色左边框，中等匹配行橙色左边框",
+    "special_sections": "报告底部三个区域：1)已排除岗位（红色标题栏）2)近期已推送（灰色标题栏）3)注意事项",
+    "javascript": "HTML底部包含copyLink函数"
+  }
+}

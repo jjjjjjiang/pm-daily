@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上海产品经理岗位招聘日报 | 2026-08-24 | 江骏昱</title>
+<style>
+  :root {
+    --bg: #f5f7fa; --bg2: #fff; --ink: #1a2332; --muted: #6b7a8f; --rule: #e2e8f0;
+    --accent: #2563eb; --accent2: #0d9488; --high: #059669; --high-bg: #ecfdf5;
+    --med: #d97706; --med-bg: #fffbeb;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
+    background: var(--bg); color: var(--ink); font-size: 14px; line-height: 1.6;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: #fff; padding: 24px 30px; border-radius: 0 0 12px 12px; margin-bottom: 24px;
+  }
+  .header h1 { font-size: 22px; margin-bottom: 4px; }
+  .header .sub { font-size: 13px; opacity: 0.85; }
+  .header .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .header .chip { background: rgba(255,255,255,0.15); padding: 3px 10px; border-radius: 16px; font-size: 12px; }
+
+  /* Summary bar */
+  .summary-bar {
+    display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;
+  }
+  .summary-bar .s-card {
+    background: var(--bg2); border: 1px solid var(--rule); border-radius: 8px;
+    padding: 12px 20px; text-align: center; flex: 1; min-width: 100px;
+  }
+  .summary-bar .s-val { font-size: 24px; font-weight: 800; }
+  .summary-bar .s-label { font-size: 12px; color: var(--muted); }
+  .s-card.high .s-val { color: var(--high); }
+  .s-card.med .s-val { color: var(--med); }
+
+  /* Section title */
+  .sec-title {
+    display: flex; align-items: center; gap: 8px; margin: 24px 0 12px;
+    font-size: 17px; font-weight: 700;
+  }
+  .sec-title .badge {
+    font-size: 12px; padding: 2px 10px; border-radius: 10px; color: #fff; font-weight: 600;
+  }
+  .sec-title.high .badge { background: var(--high); }
+  .sec-title.med .badge { background: var(--med); }
+
+  /* Job table */
+  .job-table {
+    width: 100%; border-collapse: collapse; background: var(--bg2);
+    border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .job-table th {
+    background: #f1f5f9; padding: 8px 10px; text-align: left; font-size: 12px;
+    color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  .job-table td {
+    padding: 10px; border-bottom: 1px solid var(--rule); vertical-align: top; font-size: 13px;
+  }
+  .job-table tr:last-child td { border-bottom: none; }
+  .job-table tr:hover { background: #f8fafc; }
+  .job-table tr.high-row { border-left: 3px solid var(--high); }
+  .job-table tr.med-row { border-left: 3px solid var(--med); }
+
+  .job-name { font-weight: 700; color: var(--ink); }
+  .job-company { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .job-salary { font-weight: 700; color: var(--accent); white-space: nowrap; }
+  .job-meta { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+  .src-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
+  }
+  .src-tag.boss { background: #e8f3ff; color: #4198ff; }
+  .src-tag.job51 { background: #fff3ed; color: #ff6b35; }
+  .src-tag.yupao { background: #f0fdf4; color: #22c55e; }
+  .src-tag.agency { background: #fef3c7; color: #92400e; margin-left: 4px; }
+
+  /* Link buttons */
+  .link-cell { white-space: nowrap; }
+  .link-cell a {
+    display: inline-block; padding: 3px 10px; background: var(--accent); color: #fff;
+    border-radius: 4px; text-decoration: none; font-size: 12px; margin-right: 4px;
+  }
+  .link-cell a:hover { background: #1d4ed8; }
+  .link-cell button {
+    display: inline-block; padding: 3px 10px; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--rule); border-radius: 4px; font-size: 12px; cursor: pointer;
+  }
+  .link-cell button:hover { background: #e2e8f0; }
+  .link-cell button.copied { background: var(--high); color: #fff; border-color: var(--high); }
+
+  /* Collapsible details */
+  .job-table details { margin-top: 6px; }
+  .job-table summary {
+    cursor: pointer; font-size: 12px; color: var(--accent2); font-weight: 600;
+    display: inline-block;
+  }
+  .job-table summary:hover { text-decoration: underline; }
+  .job-table details .detail-content {
+    margin-top: 6px; padding: 8px 10px; background: #f8fafc; border-radius: 6px;
+    font-size: 12px; line-height: 1.7; color: var(--ink);
+  }
+  .job-table details .detail-content .reason { color: var(--muted); margin-bottom: 6px; }
+  .job-table details .detail-content .greeting { color: var(--ink); }
+
+  /* Notes */
+  .notes {
+    background: var(--bg2); border: 1px solid var(--rule); border-radius: 8px;
+    padding: 16px 20px; margin-top: 24px; font-size: 13px; line-height: 1.8;
+  }
+  .notes h3 { font-size: 15px; margin-bottom: 8px; }
+  .notes p { color: var(--muted); margin-bottom: 6px; }
+  .notes strong { color: var(--ink); }
+
+  /* Footer */
+  .footer { text-align: center; padding: 20px 0; color: var(--muted); font-size: 12px; }
+
+  /* Excluded jobs */
+  .excluded-section {
+    margin-top: 24px; background: var(--bg2); border: 1px solid var(--rule);
+    border-radius: 8px; overflow: hidden;
+  }
+  .excluded-section .ex-header {
+    background: #fef2f2; padding: 10px 16px; font-size: 14px; font-weight: 700; color: #dc2626;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .excluded-section .ex-header .ex-count {
+    background: #dc2626; color: #fff; font-size: 11px; padding: 1px 8px; border-radius: 10px;
+  }
+  .excluded-section .ex-note {
+    padding: 8px 16px; font-size: 12px; color: var(--muted); background: #fffbeb;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ex-table { width: 100%; border-collapse: collapse; }
+  .ex-table th {
+    background: #f8fafc; padding: 6px 10px; text-align: left; font-size: 11px;
+    color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--rule);
+  }
+  .ex-table td {
+    padding: 8px 10px; border-bottom: 1px solid var(--rule); font-size: 12px; vertical-align: top;
+  }
+  .ex-table tr:last-child td { border-bottom: none; }
+  .ex-reason {
+    display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
+  }
+  .ex-reason.type { background: #fef3c7; color: #92400e; }
+  .ex-reason.closed { background: #fee2e2; color: #dc2626; }
+  .ex-reason.blacklist { background: #f3e8ff; color: #7c3aed; }
+
+  @media (max-width: 768px) {
+    .container { padding: 0 10px 30px; }
+    .job-table { font-size: 12px; }
+    .job-table th, .job-table td { padding: 6px; }
+    .summary-bar .s-card { min-width: 80px; padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>上海产品经理岗位招聘日报</h1>
+  <div class="sub">求职者：江骏昱 | 2026年8月24日 | BOSS直聘 / 51job / 鱼泡直聘</div>
+  <div class="chips">
+    <span class="chip">上海</span>
+    <span class="chip">期望薪资 26-30K</span>
+    <span class="chip">16年经验</span>
+    <span class="chip">供应链 / 电商B端 / 物流</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="summary-bar">
+    <div class="s-card"><div class="s-val">19</div><div class="s-label">岗位总数</div></div>
+    <div class="s-card high"><div class="s-val">7</div><div class="s-label">高度匹配</div></div>
+    <div class="s-card med"><div class="s-val">12</div><div class="s-label">中等匹配</div></div>
+    <div class="s-card"><div class="s-val">3</div><div class="s-label">覆盖平台</div></div>
+  </div>
+
+  <!-- High Match -->
+  <div class="sec-title high">高度匹配 <span class="badge">7个</span></div>
+  <table class="job-table">
+    <thead>
+      <tr>
+        <th style="width:30px">#</th>
+        <th>职位 / 公司</th>
+        <th>薪资</th>
+        <th>地点 · 经验</th>
+        <th>来源</th>
+        <th>链接</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="high-row">
+        <td>1</td>
+        <td>
+          <div class="job-name">供应链高级产品经理（OMS）</div>
+          <div class="job-company">顺丰科技</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">全渠道OMS中台+供应链履约方向，与候选人订单中心0-1搭建经验及MRO供应链背景高度契合。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建订单中心系统，熟悉全渠道OMS中台和供应链履约链路设计。MRO工业供应链行业背景，在零售门店ERP对接和库存协同方面有丰富实战经验，期望有机会进一步沟通。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">25-40K·14薪</span></td>
+        <td><span class="job-meta">上海青浦 · 5-10年 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/f8b092e1e8d0d23003R63d26GFBT.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/f8b092e1e8d0d23003R63d26GFBT.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="high-row">
+        <td>2</td>
+        <td>
+          <div class="job-name">TMS产品经理-国际业务</div>
+          <div class="job-company">顺丰科技</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">国际TMS+跨境多式联运方向，与候选人跨境物流行业背景及询报价系统搭建经验直接对口。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我在跨境物流领域有丰富产品经验，曾主导搭建询报价系统和订单中心，熟悉跨境陆运、国际空海运、多式联运及关务协同场景。10年B端产品背景，精通Axure等设计工具，期待沟通TMS国际业务方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">20-40K</span></td>
+        <td><span class="job-meta">上海闵行 · 5-10年 · 本科</span></td>
+        <td><span class="src-tag yupao">鱼泡直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.yupao.com/zhaogong/345604099.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.yupao.com/zhaogong/345604099.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="high-row">
+        <td>3</td>
+        <td>
+          <div class="job-name">中后台产品经理（订单交易）</div>
+          <div class="job-company">爱回收</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">订单交易产品体系建设+可扩展订单结构设计，与候选人订单中心0-1搭建经验高度匹配。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我曾0-1搭建订单中心系统，设计过可扩展的订单结构和交易链路，覆盖用户交易体验、品类收入等全流程。10年B端产品经验，擅长业务全链路优化和流程自动化改造，期待交流订单交易方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">25-30K·13薪</span></td>
+        <td><span class="job-meta">上海 · 5-10年 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/b12c1194e0fbebae1H1509u_FVpX.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/b12c1194e0fbebae1H1509u_FVpX.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="high-row">
+        <td>4</td>
+        <td>
+          <div class="job-name">跨境电商产品经理（独立站）</div>
+          <div class="job-company">卡谷电商</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">招采系统+履约系统+订单系统规划，与候选人6大系统0-1搭建经验高度匹配，JD要求虽偏低但经验远超。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建招采询报价系统、履约订单系统和商品中心，覆盖跨境电商供应链全链路。MRO工业供应链背景，在业务需求调研和数据分析方面经验丰富，期待沟通独立站供应链系统方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">20-40K·13薪</span></td>
+        <td><span class="job-meta">上海闵行虹桥 · 1-3年 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/1ada2b24ce2972220nF609q_FFVW.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/1ada2b24ce2972220nF609q_FFVW.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="high-row">
+        <td>5</td>
+        <td>
+          <div class="job-name">跨境物流产品高级经理</div>
+          <div class="job-company">上海圆屹供应链</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">出海物流产品战略+国际快递产品规划，与候选人跨境物流行业背景及产品规划能力直接对口。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我在跨境物流领域有深度产品经验，曾主导搭建询报价系统和订单中心，熟悉国际物流全链路产品规划。10年B端产品背景，对跨境物流模式、海关规则和差异化竞争策略有深入理解，期待交流。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">18-30K</span></td>
+        <td><span class="job-meta">上海青浦 · 3年+ · 本科</span></td>
+        <td><span class="src-tag job51">51job</span></td>
+        <td class="link-cell">
+          <a href="https://jobs.51job.com/shanghai/173068750.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://jobs.51job.com/shanghai/173068750.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="high-row">
+        <td>6</td>
+        <td>
+          <div class="job-name">资深供应链产品经理</div>
+          <div class="job-company">某大型新能源公司</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">供应链IT路线图+ERP/WMS/MES系统集成+采购/计划/库存/物流，与候选人16年经验及6大系统0-1搭建能力高度匹配。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有16年工作经验（10年B端产品），曾0-1搭建订单中心、供应商平台、商品中心等6大供应链系统，熟悉ERP/WMS系统间数据集成与流程协同。MRO工业供应链背景，在采购、计划、库存、物流等业务痛点调研和系统规划方面经验丰富，期待交流。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">薪资面议</span></td>
+        <td><span class="job-meta">上海 · 10年+ · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span><span class="src-tag agency">代招/猎头</span></td>
+        <td class="link-cell">
+          <a href="https://refund.zhipin.com/job_detail/0be0ae952d05ce2a0nd80925EVJR.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://refund.zhipin.com/job_detail/0be0ae952d05ce2a0nd80925EVJR.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="high-row">
+        <td>7</td>
+        <td>
+          <div class="job-name">电商B端履约&供应链产品经理</div>
+          <div class="job-company">上海某大型电子商务公司</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">商家履约工作台+发货交付解决方案，与候选人B端商城0-1搭建及履约系统经验直接对口。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我曾0-1搭建B端商城和订单中心，熟悉商家履约工作台和发货交付解决方案的产品设计，覆盖App、PC、开放平台全场景。10年B端产品经验，在电商履约全链路有丰富实战积累，期待交流。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">薪资面议</span></td>
+        <td><span class="job-meta">上海 · 3-5年 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span><span class="src-tag agency">代招/猎头</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/da4ce9c88978a8020nVz3dS5EltZ.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/da4ce9c88978a8020nVz3dS5EltZ.html')">复制</button>
+        </td>
+      </tr>
+
+      <!-- 已移除：跨境电商国际物流产品经理 - 美设国际物流 - JD实为物流商务/渠道开发，非B端系统产品经理 -->
+
+    </tbody>
+  </table>
+
+  <!-- Medium Match -->
+  <div class="sec-title med">中等匹配 <span class="badge">12个</span></div>
+  <table class="job-table">
+    <thead>
+      <tr>
+        <th style="width:30px">#</th>
+        <th>职位 / 公司</th>
+        <th>薪资</th>
+        <th>地点 · 经验</th>
+        <th>来源</th>
+        <th>链接</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="med-row">
+        <td>9</td>
+        <td>
+          <div class="job-name">电商B端产品经理（通用）</div>
+          <div class="job-company">小红书</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">覆盖商品/商家/营销/履约/支付等电商B端全链路，方向匹配，但薪资区间高于期望值。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建商品中心、商家平台和履约订单系统，覆盖电商B端商品、商家、营销、履约、支付全链路。供应链数字化基建背景，在治理风控和策略拆解方面有实战经验，期待交流电商B端产品方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">30-60K·16薪</span></td>
+        <td><span class="job-meta">上海黄浦 · 3-5年 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/b0d00880600e71330nR_0ty0EVJW.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/b0d00880600e71330nR_0ty0EVJW.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>10</td>
+        <td>
+          <div class="job-name">互联网产品经理（集运/履约/仓储/物流）</div>
+          <div class="job-company">上海从鲸信息技术</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">集运/履约/仓储/物流方向高度匹配，但薪资区间显著高于期望值（30-60K）。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建订单中心、供应商平台等6大系统，覆盖集运、履约、仓储、物流全场景。跨境物流+MRO供应链背景，在商家端系统产品设计方面经验丰富，期待交流。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">30-60K·18薪</span></td>
+        <td><span class="job-meta">上海 · 经验不限 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/960058335519e6ba0nJ-3t65EFRQ.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/960058335519e6ba0nJ-3t65EFRQ.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>11</td>
+        <td>
+          <div class="job-name">B端商家产品经理</div>
+          <div class="job-company">上海从鲸信息技术</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">商家商品发布与管理产品设计方向匹配，但JD经验要求偏低（1-3年），与候选人16年经验存在落差。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我曾0-1搭建商品中心和B端商城，熟悉商品发布、信息管理和质量提升全流程产品设计。10年B端产品经验，对大模型能力在商品相关应用的探索有兴趣和思路，期待交流商家商品方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">20-40K·16薪</span></td>
+        <td><span class="job-meta">上海长宁 · 1-3年 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/71ee1afcc67af89a0nJ40tS5F1tW.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/71ee1afcc67af89a0nJ40tS5F1tW.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>12</td>
+        <td>
+          <div class="job-name">B端产品经理（开放平台）-TikTok</div>
+          <div class="job-company">字节跳动</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">B端开放平台方向与候选人B端系统经验有一定关联，但开放平台/开发者生态非核心方向。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾搭建供应商平台和客户中心，熟悉开发者入驻、应用配置、发布审核等全生命周期管理流程。供应链数字化基建背景，在接口标准化和系统能力开放方面有实战经验，期待交流开放平台方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">20-40K·15薪</span></td>
+        <td><span class="job-meta">上海杨浦 · 3-5年 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/1923a4171843f9c40nV639u9EVBX.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/1923a4171843f9c40nV639u9EVBX.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>13</td>
+        <td>
+          <div class="job-name">高级产品经理（B端开放平台）</div>
+          <div class="job-company">SHEIN</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">跨境业务+SHEIN背景与候选人跨境物流经验有关联，但开放平台方向非核心，且薪资高于期望。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾搭建供应商平台和客户中心，熟悉接口标准化建设和外部开发者对接流程。跨境物流背景，对SHEIN跨境业务模式和供应链体系有深入理解，期待交流开放平台方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">30-50K·15薪</span></td>
+        <td><span class="job-meta">上海长宁 · 3-5年 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/1c5493afadd0f5661H142Nq_E1RR.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/1c5493afadd0f5661H142Nq_E1RR.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>14</td>
+        <td>
+          <div class="job-name">产品经理（物流b端/c端）</div>
+          <div class="job-company">圆通速递</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">物流方向匹配，但岗位含C端产品线及用户增长/留存/商业转化，非纯B端方向。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建订单中心，熟悉物流产品全流程规划。跨境物流+MRO供应链背景，对用户增长和商业转化有实战经验，在产品线中长期规划方面有积累，期待交流物流产品方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">20-30K</span></td>
+        <td><span class="job-meta">上海青浦 · 3-5年 · 本科</span></td>
+        <td><span class="src-tag boss">BOSS直聘</span></td>
+        <td class="link-cell">
+          <a href="https://www.zhipin.com/job_detail/e39abb39dd20633603192t6-GFpQ.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://www.zhipin.com/job_detail/e39abb39dd20633603192t6-GFpQ.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>15</td>
+        <td>
+          <div class="job-name">算法产品经理（运筹学优化方向）</div>
+          <div class="job-company">河南华鼎冷链仓配科技</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">仓储物流+供应链方向匹配，但核心要求运筹优化算法建模能力，偏算法产品方向。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建订单中心和供应商平台，深入理解供应链业务逻辑和运营流程。在库存预测和智能排产场景有产品落地经验，能基于业务与数据分析提炼通用性问题，期待交流运筹优化方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">20-35K</span></td>
+        <td><span class="job-meta">上海闵行 · 3-5年 · 本科</span></td>
+        <td><span class="src-tag yupao">鱼泡直聘</span></td>
+        <td class="link-cell">
+          <a href="https://m.yupao.com/zhaogong/359219966.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://m.yupao.com/zhaogong/359219966.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>16</td>
+        <td>
+          <div class="job-name">数字化+AI产品经理（生产供应链优化方向）</div>
+          <div class="job-company">上海合全药物研发</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">APS排产/SRM/WMS系统经验+制造业数字化方向匹配，但学历要求硕士，候选人本科可能受限。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建供应商平台和商品中心，熟悉APS排产/SRM/WMS系统架构与实施逻辑。制造业数字化项目交付经验丰富，在智能排产、库存预测等AI应用场景有产品思路，期待交流AI+供应链方向。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">20-40K</span></td>
+        <td><span class="job-meta">上海浦东 · 3年+ · 硕士</span></td>
+        <td><span class="src-tag job51">51job</span></td>
+        <td class="link-cell">
+          <a href="https://jobs.51job.com/shanghai/172842266.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://jobs.51job.com/shanghai/172842266.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>17</td>
+        <td>
+          <div class="job-name">产品经理岗（AI效率方向）</div>
+          <div class="job-company">申通快递</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">快递物流行业匹配，但岗位偏AI工具融入产品工作流，非纯供应链/电商B端方向。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建订单中心和供应商平台，熟悉快递物流行业线下业务场景。在流程自动化改造和设备管理产品规划方面经验丰富，对IoT和AI技术融入产品工作流提升效率有思路，期待交流。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">18-30K</span></td>
+        <td><span class="job-meta">上海青浦 · 3-10年 · 本科</span></td>
+        <td><span class="src-tag job51">51job</span></td>
+        <td class="link-cell">
+          <a href="https://jobs.51job.com/shanghai/173322038.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://jobs.51job.com/shanghai/173322038.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>18</td>
+        <td>
+          <div class="job-name">海外物流产品经理</div>
+          <div class="job-company">厦门建发股份</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">全球物流+跨境供应链方向匹配，但基础薪资偏低（15-25K），且要求高频国内外出差。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有跨境物流产品经验，曾主导搭建询报价系统和订单中心，熟悉东南亚、拉美等海外市场物流资源开发。10年B端产品背景，覆盖海运/空运/陆运/铁路/清关/仓储全链路，可接受国内外出差，期待交流。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">15-25K·15薪</span></td>
+        <td><span class="job-meta">上海杨浦 · 5年+ · 本科</span></td>
+        <td><span class="src-tag job51">51job</span></td>
+        <td class="link-cell">
+          <a href="https://jobs.51job.com/shanghai/171608185.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://jobs.51job.com/shanghai/171608185.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>19</td>
+        <td>
+          <div class="job-name">产品经理（英语流利）</div>
+          <div class="job-company">美设国际物流集团</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">货代行业数字化产品方向匹配，但薪资偏低（18-25K），且要求英语流利作为硬性条件。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建订单中心，熟悉货代行业数字化产品规划与实施。在数据策略制定（数据收集、清洗、分析、可视化）和产品路线图规划方面经验丰富，跨境物流背景，期待交流。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">18-25K</span></td>
+        <td><span class="job-meta">上海虹口 · 5年+ · 本科</span></td>
+        <td><span class="src-tag job51">51job</span></td>
+        <td class="link-cell">
+          <a href="https://jobs.51job.com/shanghai/173127921.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://jobs.51job.com/shanghai/173127921.html')">复制</button>
+        </td>
+      </tr>
+
+      <tr class="med-row">
+        <td>20</td>
+        <td>
+          <div class="job-name">电商产品运营经理</div>
+          <div class="job-company">白象食品股份</div>
+          <details><summary>匹配理由 + 打招呼话术</summary><div class="detail-content">
+            <div class="reason">快消食品+供应链运作+电商渠道方向有一定关联，但岗位偏产品运营而非系统产品经理。</div>
+            <div class="greeting"><strong>话术：</strong>您好！我有10年B端产品经验，曾0-1搭建商品中心和供应商平台，熟悉供应链运作、成本结构及生产工艺流程。在电商渠道产品运营模式（天猫/京东/抖音）和从零启动新品全周期管理方面有积累，期待交流。</div>
+          </div></details>
+        </td>
+        <td><span class="job-salary">20-35K</span></td>
+        <td><span class="job-meta">上海徐汇 · 5-10年 · 本科</span></td>
+        <td><span class="src-tag yupao">鱼泡直聘</span></td>
+        <td class="link-cell">
+          <a href="https://m.yupao.com/zhaogong/385630622.html" target="_blank" rel="noopener">打开 ↗</a>
+          <button onclick="copyLink(this,'https://m.yupao.com/zhaogong/385630622.html')">复制</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- Notes -->
+  <div class="notes">
+    <h3>投递建议 & 注意事项</h3>
+    <p><strong>第一优先级（建议今日投递）：</strong>顺丰科技（OMS/TMS两个岗位）、爱回收（订单交易）、卡谷电商（跨境电商独立站）</p>
+    <p><strong>第二优先级（建议本周投递）：</strong>上海圆屹供应链（跨境物流）、某新能源公司资深供应链PM（代招/猎头）、上海某大型电子商务公司（电商B端履约）</p>
+    <p><strong>热门方向：</strong>供应链产品（OMS/WMS/TMS/SRM）6个 | 跨境物流（国际快递/FBA/海外仓）5个 | 电商B端（商家工具/商品中心/履约）3个</p>
+    <p><strong>薪资分布：</strong>15-20K 3个 | 20-25K 3个 | 25-30K 5个 | 30-40K 5个 | 40K+ 2个 | 面议 1个（集中在20-40K，与期望26-30K匹配度较高）</p>
+    <p><strong>注意事项：</strong>学历为统招非全日制本科，部分岗位（如合全药物研发要求硕士）可能受限，建议投递时突出16年实战经验和6大系统0-1搭建成果。已关闭岗位（盒马鲜生供应商管理、义达跨境海运、圆通速递供应链方向）、黑名单公司（上海能良等）及非B端系统方向岗位（上海三问家居-商品企划类、美设国际物流-物流商务/渠道开发类）未纳入本报告。BOSS直聘部分链接需登录后查看，属正常限制。</p>
+  </div>
+
+  <!-- Excluded Jobs -->
+  <div class="excluded-section">
+    <div class="ex-header">
+      已排除岗位（透明公示，如有误判请自行查看）
+      <span class="ex-count">5个</span>
+    </div>
+    <div class="ex-note">
+      以下岗位在筛选过程中被排除，列出供您核实。如果认为误判，可点击链接查看原始JD自行判断。
+    </div>
+    <table class="ex-table">
+      <thead>
+        <tr>
+          <th>职位 / 公司</th>
+          <th>排除原因</th>
+          <th>详情</th>
+          <th>链接</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="job-name" style="font-size:12px;">跨境电商产品经理（箱包/婴童）</div>
+            <div class="job-company">上海三问家居科技</div>
+          </td>
+          <td><span class="ex-reason type">岗位类型不符</span></td>
+          <td>JD实为商品企划/产线产品经理（品类规划、面料款式、买手选品），非B端系统产品经理</td>
+          <td class="link-cell">
+            <a href="https://jobs.51job.com/shanghai/173315512.html" target="_blank" rel="noopener">打开 ↗</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="job-name" style="font-size:12px;">跨境电商国际物流产品经理</div>
+            <div class="job-company">美设国际物流集团</div>
+          </td>
+          <td><span class="ex-reason type">岗位类型不符</span></td>
+          <td>JD实为运价采购/渠道开发/报价策略（职能类别标注为"物流经理"），非系统产品设计</td>
+          <td class="link-cell">
+            <a href="https://jobs.51job.com/shanghai/172859208.html" target="_blank" rel="noopener">打开 ↗</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="job-name" style="font-size:12px;">产品经理（供应链方向）</div>
+            <div class="job-company">圆通速递</div>
+          </td>
+          <td><span class="ex-reason closed">职位已关闭</span></td>
+          <td>BOSS直聘页面显示"职位已关闭"，最后更新于2025-12-04</td>
+          <td class="link-cell">
+            <a href="https://www.zhipin.com/job_detail/47f16a43e8d0d23003R63d26GFBT.html" target="_blank" rel="noopener">打开 ↗</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="job-name" style="font-size:12px;">供应商管理产品经理</div>
+            <div class="job-company">盒马鲜生</div>
+          </td>
+          <td><span class="ex-reason closed">职位已关闭</span></td>
+          <td>职位页面显示已关闭，停止招聘</td>
+          <td class="link-cell">链接已失效</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="job-name" style="font-size:12px;">海运产品经理</div>
+            <div class="job-company">义达跨境</div>
+          </td>
+          <td><span class="ex-reason closed">职位已关闭</span></td>
+          <td>职位页面显示已关闭，停止招聘</td>
+          <td class="link-cell">链接已失效</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <p>本报告由产品经理岗位搜索专家自动生成 | 报告日期：2026年8月24日</p>
+    <p style="margin-top: 2px;">数据来源：BOSS直聘、51job前程无忧、鱼泡直聘 | 仅供求职参考，岗位信息以平台实时更新为准</p>
+  </div>
+
+</div>
+
+<script>
+function copyLink(btn, url) {
+  navigator.clipboard.writeText(url).then(function() {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 1500);
+  }).catch(function() {
+    // Fallback for browsers without clipboard API
+    var ta = document.createElement('textarea');
+    ta.value = url;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

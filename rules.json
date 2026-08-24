@@ -1,0 +1,153 @@
+{
+  "rules_config": {
+    "description": "PM岗位日报生成规则配置 - 自动任务执行时必须遵守",
+    "last_updated": "2026-08-24",
+    "version": "4.0",
+
+    "link_rules": {
+      "description": "职位链接格式规则 - 必须使用可在电脑浏览器直接打开的桌面端链接",
+      "platforms": {
+        "BOSS直聘": {
+          "desktop_format": "https://www.zhipin.com/job_detail/{id}.html",
+          "forbidden_formats": [
+            "https://m.zhipin.com/* (移动端链接，禁止使用)",
+            "https://www.zhipin.com/zhaopin/* (搜索列表页链接，非职位详情页，禁止使用)",
+            "https://m.zhipin.com/zhaopin/* (移动端搜索列表页，禁止使用)",
+            "以 ~~ 结尾的job_detail链接 (此类链接多为404，禁止使用)"
+          ],
+          "note": "必须使用 job_detail 格式且以 .html 结尾的桌面端链接，确保打开后是职位详情页。部分链接可能需登录后才能查看，属于正常限制。"
+        },
+        "51job前程无忧": {
+          "desktop_format": "https://jobs.51job.com/shanghai/{job_id}.html",
+          "forbidden_formats": [
+            "https://msearch.51job.com/* (移动端链接，禁止使用)",
+            "https://search.51job.com/jobs/* (旧格式，已失效返回404，禁止使用)"
+          ],
+          "note": "51job桌面端正确格式为 jobs.51job.com/shanghai/{id}.html，不是 search.51job.com。search.51job.com 格式已全部失效。"
+        },
+        "鱼泡直聘": {
+          "desktop_format": "https://www.yupao.com/zhaogong/{id}.html",
+          "fallback_format": "https://m.yupao.com/zhaogong/{id}.html",
+          "forbidden_formats": [],
+          "note": "鱼泡直聘部分职位桌面端 www.yupao.com 可能无法打开，此时回退使用移动端 m.yupao.com 链接（仍可在电脑浏览器中查看，显示移动版页面）。优先使用www.，打不开时用m.。"
+        }
+      },
+      "verification_rule": "生成报告前必须对每个链接进行WebFetch校验，确认链接可正常打开。打不开的链接必须搜索替换为正确的链接，不得在报告中保留无法访问的链接。"
+    },
+
+    "job_status_rules": {
+      "description": "职位状态验证规则 - 已关闭的职位必须移除，不得出现在报告中",
+      "rules": [
+        "必须验证每个职位链接的当前状态，确认职位仍处于开放/招聘中状态",
+        "如果BOSS直聘页面显示'职位已关闭'，必须从报告中移除该职位",
+        "如果51job页面显示'职位已过期/已停止招聘'，必须从报告中移除",
+        "如果鱼泡直聘页面显示职位已关闭，必须从报告中移除",
+        "对于代招/猎头岗位，同样需要验证职位状态",
+        "移除已关闭职位后，必须同步更新报告中的统计数据（岗位总数、高度匹配数、薪资分布等）",
+        "报告注意事项中应标注已排除的已关闭岗位名称"
+      ]
+    },
+
+    "blacklist_rules": {
+      "description": "公司黑名单规则 - 黑名单中的公司必须从报告中排除",
+      "config_file": "/workspace/pm-daily/blacklist.json",
+      "rules": [
+        "生成报告前必须读取 /workspace/pm-daily/blacklist.json 黑名单配置文件",
+        "黑名单中的公司（含别名）必须从岗位列表中排除",
+        "排除后在报告注意事项中标注'黑名单公司未纳入本报告'",
+        "如用户新增黑名单公司，更新 blacklist.json 文件"
+      ],
+      "current_blacklist_summary": "上海能良（卡学历）、法本、中软、东软、文思海辉、信华信、中科软"
+    },
+
+    "data_quality_rules": {
+      "description": "数据质量规则 - 确保报告中的岗位信息准确可用",
+      "rules": [
+        "每个BOSS直聘链接必须是 job_detail 格式且以.html结尾，不能是 zhaopin 搜索列表页格式，不能以~~结尾",
+        "51job链接必须使用 jobs.51job.com/shanghai/{id}.html 格式，禁止使用 search.51job.com 或 msearch.51job.com",
+        "鱼泡直聘优先使用 www.yupao.com 桌面端链接，桌面端打不开时回退使用 m.yupao.com 移动端链接",
+        "所有链接生成后必须逐一通过WebFetch校验可访问性，打不开的必须替换",
+        "职位链接以可点击的<a>标签（target=_blank，新窗口打开）+ 旁边附'复制'按钮（JavaScript clipboard API一键复制）形式展示，禁止使用<code>纯文本需手动框选复制的方式",
+        "当日报告内岗位去重，同一职位在多个平台出现时保留信息最全的一条并标注多平台来源",
+        "薪资面议的岗位可保留，但需在薪资栏标注'薪资面议'"
+      ]
+    },
+
+    "cross_day_dedup_rules": {
+      "description": "跨日去重规则 - 避免跨天重复推送相同岗位",
+      "config_file": "/workspace/pm-daily/push_history.json",
+      "retention_days": 30,
+      "rules": [
+        "生成报告前必须读取 /workspace/pm-daily/push_history.json 历史推送记录文件",
+        "将本次搜索到的岗位与历史记录比对，已推送过的岗位（30天内）不列入正式岗位列表",
+        "如果已推送过的岗位仍在招聘，放入报告底部'近期已推送'区域，标注首次推送日期，不占正式列表位置",
+        "只有新发现的岗位（历史记录中不存在的）才列入正式的高度匹配/中等匹配列表",
+        "报告生成完成后，将本次新列入正式列表的岗位追加写入 push_history.json，更新last_updated和total_pushed",
+        "push_history.json中超过retention_days天的记录可清理，清理时更新total_pushed计数",
+        "如果当天没有新岗位（全部已推送过），报告标题改为'今日暂未发现新增岗位'，并在'近期已推送'区域列出仍在招聘的历史岗位供参考",
+        "去重判断依据：优先用职位链接URL去重（提取job_id），URL不可用时用'公司名+职位名'组合去重"
+      ],
+      "edge_cases": [
+        "同一公司同一天新发了相似但不同的岗位（如顺丰科技OMS和TMS是两个不同岗位），不算重复",
+        "同一岗位换了新链接（如BOSS直聘重新发布），如果公司名+职位名相同则判定为重复",
+        "代招/猎头岗位换了委托公司但实际是同一岗位，用公司名+职位名组合判断"
+      ]
+    },
+
+    "layout_rules": {
+      "description": "报告展示格式规则 - 使用紧凑表格样式，不要大卡片",
+      "format": "紧凑表格（table）样式，每个岗位占表格一行",
+      "table_columns": ["序号", "职位名称/公司", "薪资", "地点·经验·学历", "来源", "链接操作"],
+      "link_cell": "每行链接列包含两个按钮：1）'打开 ↗'可点击的<a>标签（target=_blank新窗口打开）；2）'复制'按钮（onclick调用JavaScript copyLink函数，使用navigator.clipboard.writeText一键复制URL，复制后按钮显示'已复制 ✓'1.5秒后恢复）",
+      "collapsible_details": "匹配理由和打招呼话术使用HTML <details><summary>折叠展开，默认收起，点击'匹配理由 + 打招呼话术'展开。不要默认全部展开占用空间。",
+      "css_requirements": "表格行紧凑（padding 10px），字号13px，高度匹配行左侧绿色边框(border-left 3px solid green)，中等匹配行左侧橙色边框(border-left 3px solid orange)",
+      "forbidden": "禁止使用大卡片样式（每个岗位占整个屏幕宽度的独立卡片块），禁止使用<code>标签展示链接（需手动框选复制太麻烦）",
+      "javascript_required": "必须在HTML底部包含copyLink函数，使用navigator.clipboard.writeText API，并提供document.execCommand('copy')作为fallback"
+    },
+
+    "job_type_filter_rules": {
+      "description": "岗位类型筛选规则 - 区分B端系统产品经理与非系统类产品经理，只保留前者",
+      "target_role": "B端系统产品经理（负责软件系统/平台的规划、设计、迭代，如订单中心系统、供应商平台系统等）",
+      "must_exclude": [
+        {
+          "type": "商品企划/产线产品经理",
+          "description": "负责实体商品的品类规划、价格带设计、流行趋势分析、买手选品等，JD中'商品中心'指商品企划部门而非软件系统",
+          "keywords_to_check": ["商品企划", "买手", "流行趋势", "款式", "面料", "品类规划", "价格带设计", "设计师", "商品促销", "货品管理", "季中季末分析", "广告学", "新闻学", "审美能力"],
+          "example_excluded": "上海三问家居-跨境电商产品经理（箱包/婴童）- JD实为商品企划/产线产品经理"
+        },
+        {
+          "type": "市场/渠道产品经理",
+          "description": "负责市场调研、品牌定位、渠道开发、营销策略等，偏市场运营方向",
+          "keywords_to_check": ["品牌定位", "市场调研", "渠道开发", "营销策略", "品牌战略", "市场表现分析"]
+        },
+        {
+          "type": "物流商务/运价采购/渠道开发",
+          "description": "虽然职位名称可能含'产品经理'，但JD实际职责是运价采购与谈判、物流渠道开发、供应商资源维护、报价策略制定、销售支持等商务方向，非软件系统产品设计",
+          "keywords_to_check": ["运价采购", "运价管理", "运价谈判", "渠道开发", "物流渠道", "供应商资源", "船公司", "航空公司", "海外代理", "报价策略", "成本数据库", "商务谈判", "账期谈判", "协助销售", "投标", "市场商务"],
+          "distinguishing_rule": "如果JD核心职责是'采购运价、开发物流渠道、维护供应商关系、制定报价策略'而非'系统需求分析、产品原型设计、功能迭代规划'，则判定为物流商务类，必须排除。即使职位名称含'产品经理'也要看实际职责。",
+          "example_excluded": "美设国际物流-跨境电商国际物流产品经理 - JD实为运价采购/渠道开发/报价策略，职能类别标注为'物流经理'，非系统产品经理"
+        },
+        {
+          "type": "C端产品经理（纯用户增长/体验方向）",
+          "description": "纯C端用户增长、留存、商业转化方向，非B端系统方向",
+          "keywords_to_check": ["用户增长", "留存", "DAU", "MAU", "裂变"],
+          "note": "如果岗位同时包含B端和C端，可保留但标注中等匹配"
+        }
+      ],
+      "verification_rule": "对每个岗位，必须通过WebFetch获取完整JD，检查是否属于上述排除类型。JD中出现'商品企划''买手''流行趋势''面料''款式''设计师''广告学/新闻学'等关键词时，判定为商品企划/产线产品经理，必须排除。",
+      "key_distinction": "JD中的'商品中心'可能指两种完全不同的东西：1）商品企划部门（实体商品管理，应排除）；2）商品中心IT系统（软件系统模块，应保留）。必须通过JD上下文判断，不能仅凭关键词匹配。"
+    },
+
+    "exclusion_transparency_rules": {
+      "description": "排除透明化规则 - 被排除的岗位不得静默删除，必须在报告中公示",
+      "core_principle": "所有被排除的岗位（无论什么原因）都必须在报告底部的'已排除岗位'区域中列出，包含：职位名称、公司名称、排除原因、排除详情说明、职位链接。用户可以看到被排除了什么以及为什么，如果认为误判可以自行查看原始JD。绝对不允许静默删除。",
+      "exclusion_categories": [
+        {"tag": "岗位类型不符", "color": "orange", "description": "JD实际职责不是B端系统产品经理，如商品企划、物流商务、市场渠道等"},
+        {"tag": "职位已关闭", "color": "red", "description": "职位页面显示已关闭/停止招聘"},
+        {"tag": "黑名单公司", "color": "purple", "description": "公司在blacklist.json黑名单中"}
+      ],
+      "display_format": "在报告底部（注意事项之后、footer之前）设置'已排除岗位'区域，使用红色标题栏，内含表格列出所有被排除的岗位。表格列：职位/公司、排除原因（带颜色标签）、详情说明、链接（可点击打开）。链接已失效的标注'链接已失效'。",
+      "rule": "宁可多列出让用户自行判断，也不能静默删除导致用户永远不知道错过了什么。每个被排除的岗位必须有明确的排除原因和详情说明。"
+    }
+  }
+}

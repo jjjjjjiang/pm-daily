@@ -1,0 +1,59 @@
+{
+  "$schema": "用户画像配置 - 每个用户独立一份，定时任务生成报告时读取此文件",
+  "$instructions": "新用户初始化时，通过对话收集以下信息后填写此文件。带*为必填项。",
+
+  "user_id": "template",
+  "user_name": "",
+  "user_avatar": "",
+
+  "job_target": {
+    "target_role": "*目标职位，如：产品经理",
+    "city": "*工作城市，如：上海",
+    "accept_business_trip": "*是否接受出差，true/false",
+    "salary_range": "*期望薪资范围，如：26-30K",
+    "experience_years": "*工作年限，如：16",
+    "experience_breakdown": "年限细分说明，如：10年B端产品经理 + 1年交互设计",
+    "education": "*学历，如：统招非全日制本科",
+    "education_note": "学历备注，如：很多公司会卡学历，但仍可尝试投递"
+  },
+
+  "industry_experience": {
+    "core_industries": ["*核心行业经验，如：MRO工业供应链、跨境物流"],
+    "preferred_industries": ["优先行业，如：MRO/工业供应链、跨境物流、B2B电商"],
+    "excluded_industries": ["排除行业，如：金融科技"]
+  },
+
+  "target_directions": {
+    "preferred": ["*意向方向，如：供应链产品、电商B端产品"],
+    "excluded": ["排除方向，如：金融科技"]
+  },
+
+  "core_competencies": {
+    "system_experience": ["核心系统经验，如：订单中心、询报价系统、商品中心、供应商平台、客户中心、B端商城"],
+    "key_abilities": ["核心能力，如：供应链数字化基建、流程自动化改造、业务全链路优化"],
+    "highlight": "*最大亮点，如：6大系统0-1搭建经验"
+  },
+
+  "company_preferences": {
+    "excluded_company_types": ["*排除公司类型，如：纯外包公司（法本、中软、东软等人力外包）"],
+    "accept_agency": "*是否接受代招/猎头岗位，true/false",
+    "blacklist_companies": ["额外排除的具体公司名称"]
+  },
+
+  "search_platforms": ["*搜索平台，如：BOSS直聘、51job前程无忧、鱼泡直聘"],
+
+  "search_keywords": [
+    "*搜索关键词，如：上海 供应链产品经理",
+    "上海 B端产品经理 SaaS 电商",
+    "上海 物流产品经理 跨境"
+  ],
+
+  "greeting_strategy": {
+    "platform": "*打招呼话术适配平台，如：BOSS直聘",
+    "rule": "*话术策略，如：每个话术从用户实际经历中提取与该岗位JD最匹配的2-4个亮点，避免泛泛而谈",
+    "tone": "语气风格，如：专业、简洁、突出实战经验"
+  },
+
+  "created_at": "",
+  "updated_at": ""
+}

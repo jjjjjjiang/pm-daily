@@ -1,0 +1,57 @@
+{
+  "user_id": "jiangjunyu",
+  "user_name": "江骏昱",
+
+  "job_target": {
+    "target_role": "产品经理",
+    "city": "上海",
+    "accept_business_trip": true,
+    "salary_range": "26-30K",
+    "experience_years": "16",
+    "experience_breakdown": "约10年B端产品经理 + 1年交互设计经验",
+    "education": "统招非全日制本科",
+    "education_note": "很多公司会卡学历，但仍可尝试投递"
+  },
+
+  "industry_experience": {
+    "core_industries": ["MRO工业供应链", "跨境物流"],
+    "preferred_industries": ["MRO/工业供应链", "跨境物流", "B2B电商"],
+    "excluded_industries": ["金融科技"]
+  },
+
+  "target_directions": {
+    "preferred": ["供应链产品", "电商B端产品"],
+    "excluded": ["金融科技"]
+  },
+
+  "core_competencies": {
+    "system_experience": ["订单中心", "询报价系统", "商品中心", "供应商平台", "客户中心", "B端商城"],
+    "key_abilities": ["供应链数字化基建", "流程自动化改造", "业务全链路优化"],
+    "highlight": "6大系统0-1搭建经验"
+  },
+
+  "company_preferences": {
+    "excluded_company_types": ["纯外包公司（法本、中软、东软等人力外包）"],
+    "accept_agency": true,
+    "blacklist_companies": ["上海能良", "法本", "中软", "东软", "文思海辉", "信华信", "中科软"]
+  },
+
+  "search_platforms": ["BOSS直聘", "51job前程无忧", "鱼泡直聘"],
+
+  "search_keywords": [
+    "上海 供应链产品经理",
+    "上海 B端产品经理 SaaS 电商",
+    "上海 物流产品经理 跨境",
+    "上海 商品中心/订单中心/供应商平台 产品经理",
+    "上海 履约产品经理 电商"
+  ],
+
+  "greeting_strategy": {
+    "platform": "BOSS直聘",
+    "rule": "每个话术从用户实际经历中提取与该岗位JD最匹配的2-4个亮点，避免泛泛而谈",
+    "tone": "专业、简洁、突出实战经验"
+  },
+
+  "created_at": "2026-08-22",
+  "updated_at": "2026-08-24"
+}
