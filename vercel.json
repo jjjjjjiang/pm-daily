@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "name": "pm-daily",
+  "builds": [
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "users/**/*.html", "use": "@vercel/static" },
+    { "src": "access.json", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
