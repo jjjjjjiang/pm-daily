@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新用户登记 | PM岗位日报平台</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
+    background: #f0f2f5; color: #1a2332; min-height: 100vh;
+  }
+  .nav {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: #fff; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav a { color: #fff; text-decoration: none; font-size: 13px; opacity: 0.8; }
+  .nav a:hover { opacity: 1; }
+  .container { max-width: 680px; margin: 0 auto; padding: 24px 20px 60px; }
+
+  .form-section {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+    padding: 24px; margin-bottom: 20px;
+  }
+  .form-section h2 { font-size: 18px; margin-bottom: 16px; }
+  .form-section h3 { font-size: 14px; color: #6b7a8f; margin-bottom: 12px; font-weight: 600; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #374151;
+  }
+  .form-group label .required { color: #dc2626; }
+  .form-group label .hint { font-weight: 400; color: #9ca3af; font-size: 12px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 8px;
+    font-size: 14px; font-family: inherit; outline: none; transition: border 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: #2563eb;
+  }
+  .form-group textarea { resize: vertical; min-height: 60px; }
+  .form-row { display: flex; gap: 12px; }
+  .form-row .form-group { flex: 1; }
+
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .checkbox-item {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 12px; border: 1px solid #d1d5db; border-radius: 20px;
+    font-size: 13px; cursor: pointer; transition: all 0.15s;
+  }
+  .checkbox-item input { width: auto; }
+  .checkbox-item.checked { background: #eff6ff; border-color: #2563eb; color: #2563eb; }
+
+  .submit-btn {
+    width: 100%; padding: 12px; background: #2563eb; color: #fff; border: none;
+    border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+  }
+  .submit-btn:hover { background: #1d4ed8; }
+
+  .result-section {
+    display: none; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+    padding: 24px; margin-top: 20px;
+  }
+  .result-section.show { display: block; }
+  .result-section h2 { font-size: 18px; margin-bottom: 8px; color: #059669; }
+  .result-section .steps { font-size: 13px; color: #6b7a8f; margin-bottom: 16px; line-height: 1.8; }
+  .result-box {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 16px; font-family: monospace; font-size: 12px; white-space: pre-wrap;
+    word-break: break-all; max-height: 300px; overflow-y: auto; line-height: 1.6;
+  }
+  .copy-btn {
+    margin-top: 12px; padding: 10px 20px; background: #059669; color: #fff; border: none;
+    border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .copy-btn:hover { background: #047857; }
+  .copy-btn.copied { background: #0284c7; }
+
+  .note { font-size: 12px; color: #9ca3af; margin-top: 8px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div style="font-size:18px;font-weight:700;">PM岗位日报平台 <span style="opacity:0.7;font-size:13px;font-weight:400;">新用户登记</span></div>
+  <a href="/">← 返回首页</a>
+</div>
+
+<div class="container">
+
+  <div class="form-section">
+    <h2>填写求职信息</h2>
+    <p style="font-size:13px;color:#6b7a8f;margin-bottom:20px;">带 <span style="color:#dc2626;">*</span> 为必填项。填写完成后点击生成，将生成的配置发给平台管理员即可。</p>
+
+    <!-- 基本信息 -->
+    <h3>基本信息</h3>
+    <div class="form-group">
+      <label>姓名 <span class="required">*</span></label>
+      <input type="text" id="name" placeholder="如：张三">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>目标城市 <span class="required">*</span></label>
+        <input type="text" id="city" placeholder="如：上海">
+      </div>
+      <div class="form-group">
+        <label>是否接受出差</label>
+        <select id="business_trip">
+          <option value="true">可以出差</option>
+          <option value="false">不接受出差</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 职业信息 -->
+    <h3>职业信息</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>目标职位 <span class="required">*</span></label>
+        <input type="text" id="role" placeholder="如：产品经理" value="产品经理">
+      </div>
+      <div class="form-group">
+        <label>工作年限 <span class="required">*</span></label>
+        <input type="text" id="experience" placeholder="如：5">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>学历</label>
+        <select id="education">
+          <option value="大专">大专</option>
+          <option value="本科">本科</option>
+          <option value="统招本科">统招本科</option>
+          <option value="非全日制本科">非全日制本科</option>
+          <option value="硕士">硕士</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>期望薪资 <span class="required">*</span></label>
+        <input type="text" id="salary" placeholder="如：20-30K">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>学历备注 <span class="hint">（选填，如"很多公司卡学历但可尝试"）</span></label>
+      <input type="text" id="education_note" placeholder="如：统招非全日制本科，部分公司可能卡学历">
+    </div>
+
+    <!-- 行业经验 -->
+    <h3>行业与方向</h3>
+    <div class="form-group">
+      <label>核心行业经验 <span class="required">*</span> <span class="hint">（多个用逗号分隔）</span></label>
+      <input type="text" id="industries" placeholder="如：电商、物流、SaaS">
+    </div>
+    <div class="form-group">
+      <label>意向方向 <span class="required">*</span> <span class="hint">（多个用逗号分隔）</span></label>
+      <input type="text" id="directions" placeholder="如：供应链产品、电商B端产品">
+    </div>
+    <div class="form-group">
+      <label>排除方向 <span class="hint">（选填，不想考虑的方向）</span></label>
+      <input type="text" id="excluded_directions" placeholder="如：金融科技">
+    </div>
+
+    <!-- 核心能力 -->
+    <h3>核心能力与亮点</h3>
+    <div class="form-group">
+      <label>核心系统/项目经验 <span class="hint">（选填，做过哪些系统或项目）</span></label>
+      <textarea id="systems" placeholder="如：订单中心、供应商平台、商品中心等0-1搭建经验"></textarea>
+    </div>
+    <div class="form-group">
+      <label>核心能力 <span class="hint">（选填）</span></label>
+      <input type="text" id="abilities" placeholder="如：供应链数字化、流程自动化、业务全链路优化">
+    </div>
+    <div class="form-group">
+      <label>最大亮点 <span class="hint">（选填，一句话总结你的核心竞争力）</span></label>
+      <input type="text" id="highlight" placeholder="如：6大系统0-1搭建经验">
+    </div>
+
+    <!-- 搜索平台 -->
+    <h3>搜索平台</h3>
+    <div class="form-group">
+      <label>选择搜索平台 <span class="required">*</span></label>
+      <div class="checkbox-group" id="platforms">
+        <label class="checkbox-item checked"><input type="checkbox" value="BOSS直聘" checked> BOSS直聘</label>
+        <label class="checkbox-item checked"><input type="checkbox" value="51job前程无忧" checked> 51job前程无忧</label>
+        <label class="checkbox-item checked"><input type="checkbox" value="鱼泡直聘" checked> 鱼泡直聘</label>
+        <label class="checkbox-item"><input type="checkbox" value="智联招聘"> 智联招聘</label>
+        <label class="checkbox-item"><input type="checkbox" value="猎聘"> 猎聘</label>
+      </div>
+    </div>
+
+    <!-- 公司偏好 -->
+    <h3>公司偏好</h3>
+    <div class="form-group">
+      <label>排除的公司类型 <span class="hint">（选填）</span></label>
+      <input type="text" id="excluded_companies" placeholder="如：纯外包公司（法本、中软等）" value="纯外包公司">
+    </div>
+    <div class="form-group">
+      <label>是否接受代招/猎头岗位</label>
+      <select id="accept_agency">
+        <option value="true">可以接受</option>
+        <option value="false">不接受</option>
+      </select>
+    </div>
+
+    <button class="submit-btn" onclick="generateConfig()">生成配置</button>
+  </div>
+
+  <!-- 生成结果 -->
+  <div class="result-section" id="result">
+    <h2>配置已生成</h2>
+    <div class="steps">
+      接下来请：<br>
+      1. 点击下方"复制配置"按钮<br>
+      2. 将复制的内容通过微信发给平台管理员（江骏昱）<br>
+      3. 管理员确认后，您每天就能在网站上看到自己的岗位日报了
+    </div>
+    <div class="result-box" id="result_text"></div>
+    <button class="copy-btn" onclick="copyResult()">复制配置</button>
+    <p class="note">管理员收到配置后会在1个工作日内完成设置。设置完成后，您每天上午可以在本网站首页看到专属的岗位日报。</p>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.checkbox-item input').forEach(function(cb) {
+  cb.addEventListener('change', function() {
+    this.parentElement.classList.toggle('checked', this.checked);
+  });
+});
+
+function generateConfig() {
+  var name = document.getElementById('name').value.trim();
+  var city = document.getElementById('city').value.trim();
+  var role = document.getElementById('role').value.trim();
+  var experience = document.getElementById('experience').value.trim();
+  var salary = document.getElementById('salary').value.trim();
+  var industries = document.getElementById('industries').value.trim();
+  var directions = document.getElementById('directions').value.trim();
+
+  if (!name || !city || !role || !experience || !salary || !industries || !directions) {
+    alert('请填写所有必填项（带 * 号的）');
+    return;
+  }
+
+  var platforms = [];
+  document.querySelectorAll('#platforms input:checked').forEach(function(cb) {
+    platforms.push(cb.value);
+  });
+  if (platforms.length === 0) {
+    alert('请至少选择一个搜索平台');
+    return;
+  }
+
+  // 生成user_id
+  var userId = 'user' + Date.now().toString().slice(-6);
+
+  var config = {
+    action: "add_user",
+    user_id: userId,
+    profile: {
+      user_name: name,
+      job_target: {
+        target_role: role,
+        city: city,
+        accept_business_trip: document.getElementById('business_trip').value === 'true',
+        salary_range: salary,
+        experience_years: experience,
+        education: document.getElementById('education').value,
+        education_note: document.getElementById('education_note').value.trim()
+      },
+      industry_experience: {
+        core_industries: industries.split(/[,，]/).map(function(s) { return s.trim(); }).filter(Boolean),
+        excluded_industries: document.getElementById('excluded_directions').value.trim() ? document.getElementById('excluded_directions').value.trim().split(/[,，]/).map(function(s) { return s.trim(); }).filter(Boolean) : []
+      },
+      target_directions: {
+        preferred: directions.split(/[,，]/).map(function(s) { return s.trim(); }).filter(Boolean),
+        excluded: document.getElementById('excluded_directions').value.trim() ? document.getElementById('excluded_directions').value.trim().split(/[,，]/).map(function(s) { return s.trim(); }).filter(Boolean) : []
+      },
+      core_competencies: {
+        system_experience: document.getElementById('systems').value.trim() ? document.getElementById('systems').value.trim().split(/[,，]/).map(function(s) { return s.trim(); }).filter(Boolean) : [],
+        key_abilities: document.getElementById('abilities').value.trim() ? document.getElementById('abilities').value.trim().split(/[,，]/).map(function(s) { return s.trim(); }).filter(Boolean) : [],
+        highlight: document.getElementById('highlight').value.trim()
+      },
+      company_preferences: {
+        excluded_company_types: document.getElementById('excluded_companies').value.trim() ? [document.getElementById('excluded_companies').value.trim()] : [],
+        accept_agency: document.getElementById('accept_agency').value === 'true'
+      },
+      search_platforms: platforms
+    }
+  };
+
+  document.getElementById('result_text').textContent = JSON.stringify(config, null, 2);
+  document.getElementById('result').classList.add('show');
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copyResult() {
+  var text = document.getElementById('result_text').textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.querySelector('.copy-btn');
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '复制配置';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
