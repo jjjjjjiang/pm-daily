@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM日报平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .date-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .date-selector button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .date-selector button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .date-selector .btn-primary {
+            background: white;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .date-selector .btn-primary:hover {
+            background: #f0f0f0;
+        }
+
+        .date-selector input[type="date"] {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            color: #333;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            color: #2d3748;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 10px;
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 16px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .stat-value.completed {
+            color: #48bb78;
+        }
+
+        .stat-value.progress {
+            color: #ed8936;
+        }
+
+        .stat-value.risk {
+            color: #f56565;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.875rem;
+            color: #718096;
+            margin-top: 4px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #38a169);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .task-list,
+        .risk-list,
+        .plan-list {
+            list-style: none;
+        }
+
+        .task-list li,
+        .risk-list li,
+        .plan-list li {
+            padding: 12px 16px;
+            background: #f7fafc;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .task-list li:last-child,
+        .risk-list li:last-child,
+        .plan-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .task-list .status-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .task-list .task-content {
+            flex: 1;
+        }
+
+        .task-list .task-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .task-list .task-desc {
+            font-size: 0.875rem;
+            color: #718096;
+        }
+
+        .task-list .task-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 8px;
+        }
+
+        .tag-completed {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .tag-progress {
+            background: #feebc8;
+            color: #7b341e;
+        }
+
+        .tag-pending {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .risk-list li {
+            border-left: 4px solid #f56565;
+        }
+
+        .risk-list .risk-level {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .risk-high {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .risk-medium {
+            background: #feebc8;
+            color: #c05621;
+        }
+
+        .risk-low {
+            background: #bee3f8;
+            color: #2b6cb0;
+        }
+
+        .plan-list li {
+            border-left: 4px solid #4299e1;
+        }
+
+        .project-progress .project-item {
+            margin-bottom: 16px;
+        }
+
+        .project-progress .project-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-progress .project-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .project-progress .project-name {
+            font-weight: 500;
+        }
+
+        .project-progress .project-percent {
+            color: #718096;
+            font-size: 0.875rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #a0aec0;
+            padding: 20px !important;
+            font-style: italic;
+            border: none !important;
+        }
+
+        footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 30px;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 16px;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .overview-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 PM日报平台</h1>
+            <div class="date-selector">
+                <button id="prevDay">◀</button>
+                <input type="date" id="datePicker">
+                <button id="nextDay">▶</button>
+                <button id="todayBtn" class="btn-primary">今天</button>
+            </div>
+        </header>
+
+        <main>
+            <section class="card">
+                <h2>📅 今日概览</h2>
+                <div class="overview-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="taskCount">0</span>
+                        <span class="stat-label">任务总数</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value completed" id="completedCount">0</span>
+                        <span class="stat-label">已完成</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value progress" id="progressCount">0</span>
+                        <span class="stat-label">进行中</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value risk" id="riskCount">0</span>
+                        <span class="stat-label">风险项</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>✅ 今日工作完成情况</h2>
+                <ul id="taskList" class="task-list">
+                    <li class="empty-state">暂无任务数据</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>⚠️ 风险与问题</h2>
+                <ul id="riskList" class="risk-list">
+                    <li class="empty-state">暂无风险项</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>📋 明日计划</h2>
+                <ul id="planList" class="plan-list">
+                    <li class="empty-state">暂无计划</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>📈 项目进度</h2>
+                <div id="projectProgress" class="project-progress">
+                    <div class="empty-state">暂无项目数据</div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>PM日报平台 | 最后更新: <span id="lastUpdate">-</span></p>
+        </footer>
+    </div>
+
+    <script>
+        class PMDaily {
+            constructor() {
+                this.currentDate = new Date();
+                this.data = {};
+                this.init();
+            }
+
+            init() {
+                this.setupDatePicker();
+                this.loadData();
+                this.render();
+                this.bindEvents();
+            }
+
+            setupDatePicker() {
+                const datePicker = document.getElementById('datePicker');
+                const today = this.formatDate(this.currentDate);
+                datePicker.value = today;
+                datePicker.max = today;
+            }
+
+            bindEvents() {
+                document.getElementById('prevDay').addEventListener('click', () => this.changeDay(-1));
+                document.getElementById('nextDay').addEventListener('click', () => this.changeDay(1));
+                document.getElementById('todayBtn').addEventListener('click', () => this.goToToday());
+                document.getElementById('datePicker').addEventListener('change', (e) => this.setDate(e.target.value));
+            }
+
+            changeDay(delta) {
+                const newDate = new Date(this.currentDate);
+                newDate.setDate(newDate.getDate() + delta);
+                this.currentDate = newDate;
+                document.getElementById('datePicker').value = this.formatDate(newDate);
+                this.loadData();
+                this.render();
+            }
+
+            goToToday() {
+                this.currentDate = new Date();
+                document.getElementById('datePicker').value = this.formatDate(this.currentDate);
+                this.loadData();
+                this.render();
+            }
+
+            setDate(dateStr) {
+                this.currentDate = new Date(dateStr);
+                this.loadData();
+                this.render();
+            }
+
+            formatDate(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+
+            loadData() {
+                const dateKey = this.formatDate(this.currentDate);
+                const storedData = localStorage.getItem(`pm-daily-${dateKey}`);
+                
+                if (storedData) {
+                    this.data = JSON.parse(storedData);
+                } else {
+                    this.data = this.generateSampleData(dateKey);
+                }
+            }
+
+            generateSampleData(dateKey) {
+                const isToday = dateKey === this.formatDate(new Date());
+                
+                return {
+                    date: dateKey,
+                    tasks: [
+                        {
+                            id: 1,
+                            title: '完成用户登录模块开发',
+                            desc: '实现登录页面、接口对接、表单验证',
+                            status: 'completed',
+                            tag: '前端开发'
+                        },
+                        {
+                            id: 2,
+                            title: '需求评审会',
+                            desc: '与产品团队评审V2.0需求文档',
+                            status: 'completed',
+                            tag: '会议'
+                        },
+                        {
+                            id: 3,
+                            title: '数据看板接口联调',
+                            desc: '与后端对接统计数据接口',
+                            status: 'progress',
+                            tag: '联调'
+                        },
+                        {
+                            id: 4,
+                            title: '编写测试用例',
+                            desc: '针对新功能编写功能测试用例',
+                            status: 'pending',
+                            tag: '测试'
+                        }
+                    ],
+                    risks: [
+                        {
+                            id: 1,
+                            title: '第三方支付接口文档不全',
+                            level: 'high',
+                            desc: '支付渠道API文档缺失，可能影响接入进度'
+                        },
+                        {
+                            id: 2,
+                            title: '设计资源交付延迟',
+                            level: 'medium',
+                            desc: 'UI设计稿预计延迟1天交付'
+                        }
+                    ],
+                    plans: [
+                        '完成数据看板接口联调',
+                        '开始支付模块开发',
+                        '跟进设计资源交付情况'
+                    ],
+                    projects: [
+                        {
+                            name: '用户中心重构',
+                            percent: 75
+                        },
+                        {
+                            name: '数据看板V2.0',
+                            percent: 45
+                        },
+                        {
+                            name: '支付系统升级',
+                            percent: 30
+                        }
+                    ],
+                    lastUpdate: new Date().toISOString()
+                };
+            }
+
+            render() {
+                this.renderOverview();
+                this.renderTasks();
+                this.renderRisks();
+                this.renderPlans();
+                this.renderProjectProgress();
+                this.renderLastUpdate();
+            }
+
+            renderOverview() {
+                const tasks = this.data.tasks || [];
+                const completed = tasks.filter(t => t.status === 'completed').length;
+                const progress = tasks.filter(t => t.status === 'progress').length;
+                const risks = (this.data.risks || []).length;
+                const total = tasks.length;
+                const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+                document.getElementById('taskCount').textContent = total;
+                document.getElementById('completedCount').textContent = completed;
+                document.getElementById('progressCount').textContent = progress;
+                document.getElementById('riskCount').textContent = risks;
+                document.getElementById('progressFill').style.width = `${percent}%`;
+            }
+
+            renderTasks() {
+                const list = document.getElementById('taskList');
+                const tasks = this.data.tasks || [];
+
+                if (tasks.length === 0) {
+                    list.innerHTML = '<li class="empty-state">暂无任务数据</li>';
+                    return;
+                }
+
+                list.innerHTML = tasks.map(task => {
+                    const statusIcons = {
+                        completed: '✅',
+                        progress: '🔄',
+                        pending: '⏳'
+                    };
+                    const tagClass = `tag-${task.status}`;
+                    
+                    return `
+                        <li>
+                            <span class="status-icon">${statusIcons[task.status] || '📌'}</span>
+                            <div class="task-content">
+                                <div class="task-title">
+                                    ${task.title}
+                                    <span class="task-tag ${tagClass}">${task.tag || ''}</span>
+                                </div>
+                                <div class="task-desc">${task.desc || ''}</div>
+                            </div>
+                        </li>
+                    `;
+                }).join('');
+            }
+
+            renderRisks() {
+                const list = document.getElementById('riskList');
+                const risks = this.data.risks || [];
+
+                if (risks.length === 0) {
+                    list.innerHTML = '<li class="empty-state">暂无风险项</li>';
+                    return;
+                }
+
+                list.innerHTML = risks.map(risk => {
+                    const levelClass = `risk-${risk.level}`;
+                    const levelText = {
+                        high: '高',
+                        medium: '中',
+                        low: '低'
+                    };
+                    
+                    return `
+                        <li>
+                            <div>
+                                <strong>${risk.title}</strong>
+                                <span class="risk-level ${levelClass}">${levelText[risk.level] || risk.level}</span>
+                                <p style="margin-top: 6px; color: #718096; font-size: 0.875rem;">${risk.desc || ''}</p>
+                            </div>
+                        </li>
+                    `;
+                }).join('');
+            }
+
+            renderPlans() {
+                const list = document.getElementById('planList');
+                const plans = this.data.plans || [];
+
+                if (plans.length === 0) {
+                    list.innerHTML = '<li class="empty-state">暂无计划</li>';
+                    return;
+                }
+
+                list.innerHTML = plans.map(plan => `
+                    <li>📌 ${plan}</li>
+                `).join('');
+            }
+
+            renderProjectProgress() {
+                const container = document.getElementById('projectProgress');
+                const projects = this.data.projects || [];
+
+                if (projects.length === 0) {
+                    container.innerHTML = '<div class="empty-state">暂无项目数据</div>';
+                    return;
+                }
+
+                container.innerHTML = projects.map(project => `
+                    <div class="project-item">
+                        <div class="project-header">
+                            <span class="project-name">${project.name}</span>
+                            <span class="project-percent">${project.percent}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${project.percent}%"></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            renderLastUpdate() {
+                const lastUpdate = this.data.lastUpdate;
+                if (lastUpdate) {
+                    const date = new Date(lastUpdate);
+                    document.getElementById('lastUpdate').textContent = date.toLocaleString('zh-CN');
+                }
+            }
+        }
+
+        // 启动应用
+        document.addEventListener('DOMContentLoaded', () => {
+            new PMDaily();
+        });
+    </script>
+</body>
+</html>
